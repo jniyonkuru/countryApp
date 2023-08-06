@@ -3,6 +3,7 @@ let filteredArray;
 let region = "";
 let searchValue = "";
 let searchBYvalue;
+let mode='light';
 const searchBox = document.querySelector("#search-box");
 const selectOption = document.querySelector("#select-region");
 let allCards;
@@ -11,6 +12,7 @@ async function fetchAllCountry() {
     mode: "cors",
   });
   const countriesData = await countries.json();
+  console.log(countriesData);
   mappedArray = countriesData.map((country) => ({
     name: country.name.common,
     region: country.region,
@@ -20,14 +22,35 @@ async function fetchAllCountry() {
     countryCode:country.ccn3,
     borders:country.borders,
     languages:country.languages,
+    cca3:country.cca3,
+    area:country.area
   }));
-  console.log(mappedArray)
-
+  
+ console.log(mappedArray);
 localStorage.setItem('data',JSON.stringify(mappedArray));
 display(mappedArray);
 }
 fetchAllCountry();
 
+document.querySelector('.mode').addEventListener('click' ,function(e){
+  document.querySelector('header').classList.toggle('dark-mode');
+  document.querySelector('body').classList.toggle('dark-mode');
+  if(mode=='light'){
+    document.querySelector('.mode').innerHTML=`
+    <img src="./images/icons8-sun-30 (1).png" alt="">
+    <p>Light mode</p>
+`;
+    mode='dark';
+  }else{
+    document.querySelector('.mode').innerHTML=`
+    <img src="./images/icons8-moon-30.png" alt="">
+                <p>Dark mode</p>
+                
+`;
+mode='light';
+  }
+ 
+})
 
 searchBox.addEventListener("input", function (e) {
   searchValue = e.target.value;
