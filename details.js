@@ -13,7 +13,7 @@ document.querySelector('.buttons').addEventListener('click',function(e){
   e.preventDefault();
   let nm=e.target.closest('.btn').textContent;
   element=data.filter(c=>c.name==nm)[0];
-  window.open("./details.html" +`?id=${element.countryCode}`, "_blank");
+  window.open("./details.html" +`?id=${element.countryCode}`,'_self');
   display(element);
 })
 
@@ -29,7 +29,7 @@ document.querySelector('.image-details').innerHTML=`
 `;
 document.querySelector('.content-details').innerHTML=`
 <h1>${element.name}</h1>
-<p>capital:${element.capital}</p>
+<p>Capital:<strong>${element.capital}</strong></p>
 <p>Population:<strong>${element.population.toLocaleString('en-us')}</strong></p>
 <p>Area:<strong>${element.area.toLocaleString('en-us')}km²</strong></p>
 <p>Languages:<strong>${Object.values(element.languages)}</strong></p>
@@ -38,7 +38,6 @@ document.querySelector('.content-details').innerHTML=`
 <div class="buttons"></div>
         
 `;
-
  if(element.borders){
       for(item of element.borders){
        let button=document.createElement('button');
