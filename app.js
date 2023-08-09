@@ -3,7 +3,7 @@ let filteredArray;
 let region = "";
 let searchValue = "";
 let searchBYvalue;
-let mode='light';
+let mode ='';
 const searchBox = document.querySelector("#search-box");
 const selectOption = document.querySelector("#select-region");
 let allCards;
@@ -19,38 +19,38 @@ async function fetchAllCountry() {
     population: country.population,
     capital: country.capital,
     src: country.flags.png,
-    countryCode:country.ccn3,
-    borders:country.borders,
-    languages:country.languages,
-    cca3:country.cca3,
-    area:country.area
+    countryCode: country.ccn3,
+    borders: country.borders,
+    languages: country.languages,
+    cca3: country.cca3,
+    area: country.area,
   }));
-  
- console.log(mappedArray);
-localStorage.setItem('data',JSON.stringify(mappedArray));
-display(mappedArray);
+
+  console.log(mappedArray);
+  localStorage.setItem("data", JSON.stringify(mappedArray));
+  display(mappedArray);
 }
 fetchAllCountry();
-
-document.querySelector('.mode').addEventListener('click' ,function(e){
-  document.querySelector('header').classList.toggle('dark-mode');
-  document.querySelector('body').classList.toggle('dark-mode');
-  if(mode=='light'){
-    document.querySelector('.mode').innerHTML=`
+document.querySelector(".mode").addEventListener("click", function (e) {
+  document.querySelector("header").classList.toggle("dark-mode");
+  document.querySelector("body").classList.toggle("dark-mode");
+  if (mode == "light") {
+    document.querySelector(".mode").innerHTML = `
     <img src="./images/icons8-sun-30 (1).png" alt="">
     <p>Light mode</p>
 `;
-    mode='dark';
-  }else{
-    document.querySelector('.mode').innerHTML=`
+    mode = "dark";
+    localStorage.setItem("mode", `${mode}`);
+  } else {
+    document.querySelector(".mode").innerHTML = `
     <img src="./images/icons8-moon-30.png" alt="">
                 <p>Dark mode</p>
                 
 `;
-mode='light';
+    mode = "light";
+    localStorage.setItem("mode", `${mode}`);
   }
- 
-})
+});
 
 searchBox.addEventListener("input", function (e) {
   searchValue = e.target.value;
@@ -63,20 +63,19 @@ selectOption.addEventListener("change", function (e) {
   filterCountry(region, searchValue);
 });
 function filterCountry(region, searchValue) {
-
-   if(region){
-      
-       filteredArray = mappedArray.filter((c) => {
-       const matchesRegion = c.region.toLowerCase() === region.toLowerCase();
-       const matchesSearch = c.name
-         .toLowerCase()
-         .includes(searchValue.toLowerCase());
-       return matchesRegion && matchesSearch;
-     });
-   }else{
-
-      filteredArray=mappedArray.filter(c=>c.name.toLowerCase().includes(searchValue));
-   }
+  if (region) {
+    filteredArray = mappedArray.filter((c) => {
+      const matchesRegion = c.region.toLowerCase() === region.toLowerCase();
+      const matchesSearch = c.name
+        .toLowerCase()
+        .includes(searchValue.toLowerCase());
+      return matchesRegion && matchesSearch;
+    });
+  } else {
+    filteredArray = mappedArray.filter((c) =>
+      c.name.toLowerCase().includes(searchValue)
+    );
+  }
   display(filteredArray);
 }
 
@@ -89,6 +88,15 @@ function searchCountry(searchValue) {
 
 function display(array) {
   document.querySelector(".container").innerHTML = "";
+  mode=localStorage.getItem('mode');
+  if(mode=='dark'){
+  document.querySelector('body').classList.add('dark-mode');
+  document.querySelector("header").classList.add('dark-mode')
+  document.querySelector(".mode").innerHTML = `
+    <img src="./images/icons8-sun-30 (1).png" alt="">
+    <p>Light mode</p>`
+  
+  ;}
   for (let item of array) {
     let image = document.createElement("img");
     let countryName = document.createElement("h3");
@@ -98,7 +106,7 @@ function display(array) {
     let capital = document.createElement("p");
     let card = document.createElement("div");
     card.classList.add("country-card");
-    card.setAttribute('id',`${item.countryCode}`);
+    card.setAttribute("id", `${item.countryCode}`);
     image.src = `${item.src}`;
     countryName.innerHTML = `${item.name}`;
     region.innerHTML = `<strong>Region: </strong>${item.region}`;
@@ -109,8 +117,8 @@ function display(array) {
     card.append(image, countryName, region, population, capital);
     document.querySelector(".container").appendChild(card);
   }
-   document.querySelector('.container').addEventListener('click',function(e){
-    const identity=e.target.closest('.country-card').id;
-      window.open(`details.html?id=${identity}`, '_blank');
-   })
+  document.querySelector(".container").addEventListener("click", function (e) {
+    const identity = e.target.closest(".country-card").id;
+    window.open(`details.html?id=${identity}&mode=${mode}`, "_blank");
+  });
 }

@@ -4,6 +4,17 @@
     box-sizing: border-box;
 }
 
+:root{
+    --background-color:#e7e5e5;
+    --text-color:#ffff;
+    --border-color:#8b8989;
+    --select-color:#4e4d4d;
+}
+body{
+  background: var(--background-color); 
+  transition:all .2s;
+}
+
 img{
 width:100%;
 height: 150px;
@@ -13,13 +24,13 @@ border-radius: 2px;
 display: flex;
 flex-direction: column;
 width: 20%;
-gap: 10px;
+gap: 5px;
 border-radius: 5px;
 padding: 10px;
 overflow: hidden;
 margin:10px;
 transition: 0.1s;
-background: #e7e5e5;
+background: var(--background-color);
 cursor: pointer;
 border:1px solid #8b8989;
 height: 300px;
@@ -38,16 +49,15 @@ height: 300px;
     justify-content:flex-start;
     
 }
-.hide{
+/* .hide{
     display: none;
-}
+} */
 
 .container-details{
     display: flex;
     justify-content:center;
     align-items:center;
     height:450px;
-    width:1000px;
 }
 .image-details img{
     height: 450px;
@@ -83,37 +93,40 @@ header{
     height :150px;
     position:sticky;
     top:0;
-    background: #ffff;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     z-index: 1;
     padding:25px;
-    background: #e7e5e5;
+    background:var(--background-color);
 }
 .dark-mode{
-    background:rgb(3, 3, 19);
-    color: #8b8989;
+    --background-color:#000;
+    color:#ffff;
+    --border-color:#8b8989
 }
 
 .header-search img{
 width:20px;
 height: 20px;
-margin:15px;
+margin: 15px;
+
 }
 .header-search input{
     outline: none;
     border: none;
     font-size: 16px;
     font-weight: 400;
+    flex:1;
+
 }
  .header-search{
     width: 400px;
     display: flex;
     justify-content:flex-start;
     border-radius: 12px;
-    gap:10px;
     height: 50px;
-    border:1px solid #8b8989;
-    background: #ffffff;
+    border:1px solid  var(--border-color);
+    overflow: hidden;
+    background: #ffff;
     
  }
  .header{
@@ -125,14 +138,14 @@ margin:15px;
  }
  select{
     height: 50px;
-    border:1px solid #8b8989;
+    border:1px solid var(--border-color);
     border-radius: 12px;
     padding: 0 30px;
     font-size: 16px;
     font-weight: 400;
-    color: #868484;
-    background: #ffffff;
+    color: var(--select-color);
     outline: none;
+    background: #ffff;
  }
  .title{
     padding:0 30px;
@@ -150,7 +163,6 @@ cursor: pointer;
  }
  .details{
  padding: 100px 200px;
- background: #e7e5e5;
 
  }
  .details button{
@@ -162,7 +174,7 @@ cursor: pointer;
  }
  button#back{
 margin-bottom: 30px;
-border:1px solid #8b8989;
+border:1px solid var(--border-color);
  }
  button#back:hover{
 transform: scale(1.1);
